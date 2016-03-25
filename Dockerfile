@@ -12,6 +12,5 @@ RUN wget http://client.pdinc.us/open-cobol-1.1-1.x86_64.rpm
 RUN rpm -i open-cobol-1.1-1.x86_64.rpm
 
 RUN git clone https://github.com/johnfosborneiii/docker-cobol-example
-RUN chmod 777 -R docker-cobol-example*
-RUN cobc -free -x -o helloworld-exe docker-cobol-example/HELLO.COB
+RUN cobc -free -x -o helloworld-exe docker-cobol-example/helloworld
 RUN ./helloworld-exe
