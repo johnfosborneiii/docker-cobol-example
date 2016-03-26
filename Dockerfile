@@ -27,6 +27,6 @@ ARG CACHEBUST=1
 
 RUN git clone https://github.com/johnfosborneiii/docker-cobol-example
 #RUN cobc -free -x -o helloworld docker-cobol-example/johnsCOBOLapp.cbl
-RUN cobc -x johnsCOBOLapp.cbl
+RUN cobc -x docker-cobol-example/johnsCOBOLapp.cbl
 #RUN cobcrun helloworld
 RUN ./helloworld
