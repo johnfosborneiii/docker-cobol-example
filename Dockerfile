@@ -21,7 +21,12 @@ RUN rpm -i open-cobol-1.1-1.x86_64.rpm
 RUN locate ldb
 RUN locate ldb.so
 RUN ln -s /usr/lib64/libldb.so /usr/lib64/ldb.so
+
+#This cache bust makes sure the docker build gets the latest code from github
+ARG CACHEBUST=1
+
 RUN git clone https://github.com/johnfosborneiii/docker-cobol-example
-RUN cobc -free -x -o helloworld docker-cobol-example/johnsCOBOLapp.cbl
-RUN cobcrun helloworld
+#RUN cobc -free -x -o helloworld docker-cobol-example/johnsCOBOLapp.cbl
+RUN cobc -x johnsCOBOLapp.cbl
+#RUN cobcrun helloworld
 RUN ./helloworld
