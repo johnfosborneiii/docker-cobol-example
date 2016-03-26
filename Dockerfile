@@ -10,23 +10,20 @@ MAINTAINER John Osborne <johnfosborneiii@gmail.com>
 RUN yum -y install epel-release gcc git wget; yum clean all
 RUN yum -y install gmp gmp-devel gmp-status; yum clean all
 RUN yum -y install ncurses-devel; yum clean all
-RUN yum -y install ldb-tools; yum clean all
-RUN yum -y install libldb; yum clean all
-RUN yum -y install libldb-devel; yum clean all
 RUN yum -y install mlocate; yum clean all
+RUN yum -y install ldb-tools ldb-devel ldb; yum clean all
 RUN updatedb; yum clean all
 RUN wget http://client.pdinc.us/open-cobol-1.1-1.x86_64.rpm 
 RUN rpm -i open-cobol-1.1-1.x86_64.rpm
 
-RUN locate ldb
-RUN locate ldb.so
-RUN ln -s /usr/lib64/libldb.so /usr/lib64/ldb.so
+RUN yum -y install db4 db4-devel; yum clean all
 
 #This cache bust makes sure the docker build gets the latest code from github
-ARG CACHEBUST=1
+ARG CACHEBUST=2
 
 RUN git clone https://github.com/johnfosborneiii/docker-cobol-example
 #RUN cobc -free -x -o helloworld docker-cobol-example/johnsCOBOLapp.cbl
-RUN cobc -x docker-cobol-example/johnsCOBOLapp.cbl
+RUN cobc -free -x -o johnsCOBOLapp docker-cobol-example/johnsCOBOLapp.cbl -L/usr/lib64/ -ldb
 #RUN cobcrun helloworld
-RUN ./helloworld
+RUN ls -l
+RUN ./johnsCOBOLapp 
