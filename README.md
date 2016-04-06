@@ -19,14 +19,11 @@ And you can also pull image from DockerHub.
 Run PHP
 ---------------
 
-Build and Run Application.
-
-$ docker-compose up -d
+Build and Run Application
 ```
+$ docker-compose up -d
 
 Access by Web browser
 
 ```
 http://localhost:8080
-```
-
