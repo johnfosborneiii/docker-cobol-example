@@ -17,13 +17,18 @@ RUN wget http://client.pdinc.us/open-cobol-1.1-1.x86_64.rpm
 RUN rpm -i open-cobol-1.1-1.x86_64.rpm
 
 RUN yum -y install db4 db4-devel; yum clean all
+RUN yum -y install httpd && yum clean all
+RUN yum -y install php && yum clean all
 
-#This cache bust makes sure the docker build gets the latest code from github
-ARG CACHEBUST=2
+# Add httpd.conf file which has php module loaded and index.php
+ADD resources/httpd.conf /etc/httpd/conf/httpd.conf 
+ADD src/php/index.php /var/www/html/
 
-RUN git clone https://github.com/johnfosborneiii/docker-cobol-example
-#RUN cobc -free -x -o helloworld docker-cobol-example/johnsCOBOLapp.cbl
-RUN cobc -free -x -o johnsCOBOLapp docker-cobol-example/johnsCOBOLapp.cbl -L/usr/lib64/ -ldb
-#RUN cobcrun helloworld
-RUN ls -l
-RUN ./johnsCOBOLapp 
+RUN mkdir /cobol/
+ADD src/COBOL/johnsCOBOLapp.cbl /cobol/
+
+RUN cobc -free -x -o johnsCOBOLapp /cobol/johnsCOBOLapp.cbl -L/usr/lib64/ -ldb
+
+ENTRYPOINT ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+
+EXPOSE 80
