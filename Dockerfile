@@ -29,6 +29,9 @@ ADD src/COBOL/johnsCOBOLapp.cbl /cobol/
 
 RUN cobc -free -x -o johnsCOBOLapp /cobol/johnsCOBOLapp.cbl -L/usr/lib64/ -ldb
 
+RUN chmod -R 755 /etc/httpd/
+RUN chmod -R 755 /var/www/
+
 ENTRYPOINT ["/usr/sbin/httpd", "-D", "FOREGROUND"]
 
-EXPOSE 80
+EXPOSE 8080
