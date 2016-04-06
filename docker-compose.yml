@@ -1,0 +1,4 @@
+app:
+  image: johnfosborneiii/docker-cobol-example 
+  ports:
+    - "8080:80"
