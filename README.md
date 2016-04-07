@@ -1,7 +1,7 @@
-COBOL for CGI
+COBOL running in a Docker Container on CentOS 
 ===============
 
-Docker image for COBOL CGI environments.
+This Docker image runs a PHP page in Apache HTTPD which calls COBOL code and prints it to the screen
 
 Build Image
 ---------------
